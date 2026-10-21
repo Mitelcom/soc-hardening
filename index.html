@@ -407,6 +407,11 @@ nav.tabs button{padding-left:10px;padding-right:10px}
 .logo-prev span{font:500 12px var(--mono);color:#8C96A5}
 .logo-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .logo-actions .up{width:100%;margin-top:2px}
+.chk{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2);width:100%;cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--teal)}
+.hb-logo.nobg{background:transparent;box-shadow:none;padding:0}
+.hb-logo.nobg img{max-height:60px;max-width:240px}
+.logo-prev.dark{background:#16253C;border-style:solid;border-color:#34507A}
 .brand{min-width:0;flex:1 1 auto}
 .brand .txt{min-width:0}
 .brand b{max-width:100%}
@@ -596,6 +601,7 @@ nav.tabs{flex:0 0 auto}
         <label class="btn primary" for="cl-logo-f">Subir logo</label>
         <input type="file" id="cl-logo-f" class="hidden" accept=".png,.jpg,.jpeg,.svg,.webp">
         <button class="btn" id="cl-logo-del">Quitar</button>
+        <label class="chk"><input type="checkbox" id="cl-logo-nobg"> Sin recuadro blanco (para logos blancos o claros)</label>
         <div class="up" id="cl-logo-msg"></div>
       </div>
     </div>
@@ -1204,7 +1210,9 @@ function showTab(t){
 const LOGO_TYPES={png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg",svg:"image/svg+xml",webp:"image/webp"};
 let logoShown=null;
 function renderLogo(){
-  const p=((cur()||{}).encargados||{}).__logo||null;
+  const e0=((cur()||{}).encargados||{}); const p=e0.__logo||null; const nobg=!!e0.__logo_nobg;
+  $("hb-logo").classList.toggle("nobg",nobg); $("cl-logo-prev").classList.toggle("dark",nobg);
+  const cb=$("cl-logo-nobg"); cb.checked=nobg; cb.disabled=!p;
   if(p===logoShown) return; logoShown=p;
   const hb=$("hb-logo"), prev=$("cl-logo-prev");
   prev.textContent=""; $("cl-logo-del").disabled=!p;
@@ -1232,7 +1240,7 @@ async function uploadLogo(f){
 async function removeLogo(){
   const old=((cur()||{}).encargados||{}).__logo; if(!old) return;
   if(!confirm("¿Quitar el logo de este cliente?")) return;
-  const e=encObj(); delete e.__logo; await saveCliente({encargados:e});
+  const e=encObj(); delete e.__logo; delete e.__logo_nobg; await saveCliente({encargados:e});
   sb.storage.from(BUCKET).remove([old]); $("cl-logo-msg").textContent="Logo quitado.";
 }
 
@@ -1325,6 +1333,7 @@ function initUI(){
   $("rq-export").onclick=exportReqs;
   $("cl-logo-f").addEventListener("change",e=>{ uploadLogo(e.target.files[0]); e.target.value=""; });
   $("cl-logo-del").onclick=removeLogo;
+  $("cl-logo-nobg").addEventListener("change",ev=>{ const e=encObj(); if(ev.target.checked) e.__logo_nobg=true; else delete e.__logo_nobg; saveCliente({encargados:e}); });
   $("rqn-add").onclick=addCustomReq;
   ["rq-cat","rq-est","rq-area"].forEach(x=>$(x).addEventListener("change",renderReqs));
   $("na-add").onclick=()=>{ addArea($("na-name").value); $("na-name").value=""; };
