@@ -299,6 +299,56 @@ h2.sec{font-size:19px;margin:26px 0 4px;font-weight:600}
 .brand b{max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 .top .wrap{flex-wrap:nowrap}
 @media (max-width:1100px){ .top .wrap{flex-wrap:wrap} }
+
+/* ---------- Solicitudes ---------- */
+.rq-head{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.rq-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:16px 0 4px}
+.rq-stats .kpi .n{font-size:24px}
+.rq-stats .kpi.v .n{color:var(--teal)} .rq-stats .kpi.r .n{color:var(--ink)} .rq-stats .kpi.s .n{color:var(--warn)} .rq-stats .kpi.x .n{color:var(--orange)} .rq-stats .kpi.late .n{color:var(--orange)}
+.rq-filters{position:static}
+.banner-in{background:var(--warn-a);border:1px solid rgba(227,167,63,.45);border-radius:8px;padding:10px 14px;font-size:13.5px;margin:6px 0 10px}
+.rq-group{margin:14px 0 18px;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rq-group > .ghead{grid-template-columns:auto 1fr auto 140px}
+.rq{border-top:1px solid var(--line)}
+.rq:first-of-type{border-top:0}
+.rq-row{display:grid;grid-template-columns:14px 44px 1fr 170px 150px 140px 46px 24px;gap:12px;align-items:center;padding:10px 16px}
+.rq-row:hover{background:var(--raise)}
+.rq-k{font:600 12.5px var(--mono);color:var(--teal)}
+.rq-t{font-size:14px;font-weight:500;cursor:pointer}
+.rq-t small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+.rq-row input,.rq-row select{border:1px solid var(--line2);border-radius:6px;padding:6px 8px;background:var(--bg2);color:var(--ink);font-size:13px;width:100%}
+.rq-row input::placeholder{color:var(--dim)}
+.rq-row input[type=date]{font-family:var(--mono);font-size:12px}
+.rq-row input.late{border-color:var(--orange);color:#F08A62}
+.rq-ev{font:500 12px var(--mono);color:var(--muted);text-align:right}
+.rq-x{background:none;border:0;color:var(--muted);font-size:16px;padding:0;transform:rotate(0);transition:transform .15s}
+.rq.open .rq-x{transform:rotate(90deg)}
+.led.q-Pendiente{background:var(--pend)} .led.q-Solicitado{background:var(--warn);box-shadow:0 0 8px rgba(227,167,63,.5)} .led.q-Recibido{background:#7FA3D6;box-shadow:0 0 8px rgba(127,163,214,.5)} .led.q-Validado{background:var(--ok);box-shadow:0 0 8px rgba(80,178,192,.6)} .led.q-No.existe,.led.q-Noexiste{background:var(--bad)} .led.q-Noaplica{background:var(--na);box-shadow:none}
+.rq-body{display:none;padding:4px 16px 16px 86px;gap:12px}
+.rq.open .rq-body{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+.rq-sgs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.sgchip{font:600 11.5px var(--mono);border:1px solid var(--line2);background:var(--bg2);color:var(--ink2);border-radius:4px;padding:2px 7px;display:inline-flex;gap:6px;align-items:center}
+.sgchip:hover{border-color:var(--teal);color:var(--teal)}
+.sgchip i{width:7px;height:7px;border-radius:50%;background:var(--pend)}
+.sgchip i.s-cumple{background:var(--ok)} .sgchip i.s-parcial{background:var(--warn)} .sgchip i.s-nocumple{background:var(--bad)} .sgchip i.s-noaplica{background:var(--na)}
+.rq-body textarea{min-height:70px}
+.rq-body .drop{padding:10px}
+.rq-meta{font:500 11.5px var(--mono);color:var(--muted);margin-top:8px}
+.rq-del{background:none;border:0;color:var(--muted);font-size:12.5px;text-decoration:underline;padding:6px 0 0}
+.rq-new{margin:6px 0 40px}
+.rq-new-grid{display:grid;grid-template-columns:1.6fr 170px 1.2fr auto;gap:8px}
+.rq-new-grid input,.rq-new-grid select{border:1px solid var(--line2);border-radius:6px;padding:8px 10px;background:var(--bg2);color:var(--ink);min-width:0}
+.rq-new-grid input::placeholder{color:var(--dim)}
+.dreq{display:grid;grid-template-columns:12px 40px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.dreq:first-child{border-top:0}
+.dreq b{font:600 12px var(--mono);color:var(--teal)}
+.dreq button{background:none;border:0;color:var(--ink);text-align:left;padding:0;font-size:13.5px;cursor:pointer}
+.dreq button:hover{color:var(--teal)}
+.dreq-files{grid-column:3 / 5;display:flex;flex-wrap:wrap;gap:6px}
+.dreq-files a{font:500 11.5px var(--mono);color:var(--ink2)}
+@media (max-width:1100px){ .rq-row{grid-template-columns:14px 40px 1fr 140px 130px 40px 20px} .rq-row .rq-resp{display:none} .rq-stats{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:760px){ .rq-row{grid-template-columns:12px 1fr 120px 20px} .rq-row .rq-k,.rq-row .rq-date,.rq-row .rq-ev{display:none} .rq.open .rq-body{grid-template-columns:1fr;padding-left:16px} .rq-new-grid{grid-template-columns:1fr} }
+.badge{display:inline-block;min-width:18px;padding:0 5px;margin-left:4px;border-radius:9px;background:var(--orange);color:#fff;font:600 11px/18px var(--mono);text-align:center}
 </style>
 </head>
 <body>
@@ -309,7 +359,7 @@ h2.sec{font-size:19px;margin:26px 0 4px;font-weight:600}
       <h2>SOC MitelcomSec</h2>
       <div class="grid" id="lg-grid"></div>
     </div>
-    <div class="foot">Acceso restringido al equipo · v1.3</div>
+    <div class="foot">Acceso restringido al equipo · v1.4</div>
   </div>
   <div class="form-side">
     <div class="card">
@@ -340,13 +390,14 @@ h2.sec{font-size:19px;margin:26px 0 4px;font-weight:600}
     <div class="brand"><img src="data:image/png;base64,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" alt="mitelcom"><span class="sep" aria-hidden="true"></span><div class="txt"><span class="unit">SOC · Hardening CIS v8.1</span><b id="cliente-t">Diagnóstico de hardening</b></div></div>
     <nav class="tabs" role="tablist">
       <button role="tab" data-tab="checklist" aria-selected="true">Checklist</button>
+      <button role="tab" data-tab="solicitudes" aria-selected="false">Solicitudes <span id="rq-n"></span></button>
       <button role="tab" data-tab="hallazgos" aria-selected="false">Hallazgos <span id="hz-n"></span></button>
       <button role="tab" data-tab="resumen" aria-selected="false">Resumen</button>
       <button role="tab" data-tab="encargados" aria-selected="false">Cliente</button>
     </nav>
     <select class="cli" id="cli" aria-label="Cliente"></select>
     <div class="sync" id="sync"><i></i><span>Conectando…</span></div>
-    <button class="btn" id="export">Exportar CSV</button>
+    <button class="btn" id="export" title="Exportar checklist en CSV">CSV</button>
     <span class="who" id="who"></span>
     <button class="btn" id="logout">Salir</button>
   </div>
@@ -420,6 +471,35 @@ h2.sec{font-size:19px;margin:26px 0 4px;font-weight:600}
     <div id="list"></div>
   </section>
 
+  <section data-panel="solicitudes" class="hidden">
+    <div class="rq-head">
+      <div>
+        <h2 class="sec">Solicitudes al cliente</h2>
+        <p class="lead">Lo que se pide al cliente para evaluar. Cada solicitud está ligada a los safeguards que cubre; la evidencia que subas aquí aparece en todos ellos.</p>
+      </div>
+      <button class="btn" id="rq-export">Exportar lista para el cliente</button>
+    </div>
+    <div class="rq-stats" id="rq-stats"></div>
+    <div class="filters rq-filters">
+      <select id="rq-cat" aria-label="Categoría"><option value="">Todas las categorías</option></select>
+      <select id="rq-est" aria-label="Estado"><option value="">Todos los estados</option></select>
+      <select id="rq-area" aria-label="Encargado"><option value="">Todas las áreas</option></select>
+      <span class="count" id="rq-count"></span>
+    </div>
+    <div class="banner-in hidden" id="rq-missing">Para guardar las solicitudes falta correr una vez el script <b>supabase_solicitudes.sql</b> en Supabase (SQL Editor → New query → Run). Mientras tanto puedes consultar la lista.</div>
+    <div id="rq-list"></div>
+    <div class="tile rq-new">
+      <h3>Agregar solicitud personalizada</h3>
+      <div class="rq-new-grid">
+        <input id="rqn-t" placeholder="Qué se pide (p. ej. Reporte de licencias de Veeam)">
+        <select id="rqn-cat" aria-label="Categoría"></select>
+        <input id="rqn-sg" placeholder="Safeguards que cubre, separados por coma (p. ej. 11.2, 11.3)">
+        <button class="btn primary" id="rqn-add">Agregar</button>
+      </div>
+      <div class="up" id="rqn-msg"></div>
+    </div>
+  </section>
+
   <section data-panel="hallazgos" class="hidden">
     <h2 class="sec">Hallazgos</h2>
     <p class="lead">Safeguards calificados como Parcial o No cumple, primero los de IG1 y los No cumple. Abre uno para ver evidencia y notas.</p>
@@ -447,7 +527,7 @@ h2.sec{font-size:19px;margin:26px 0 4px;font-weight:600}
     <div class="newcli"><input id="na-name" placeholder="Nombre de la nueva área (p. ej. Telefonía IP)"><button class="btn primary" id="na-add">Agregar área</button><button class="btn" id="na-reset">Restablecer predeterminadas</button></div>
     <h2 class="sec">Agregar otro cliente</h2>
     <div class="newcli"><input id="nc-name-1" placeholder="Nombre del cliente"><button class="btn primary" data-new="1">Crear cliente</button></div>
-    <p class="lead mono" style="font-size:12px;margin-bottom:40px">Versión de la herramienta: v1.3 · áreas editables</p>
+    <p class="lead mono" style="font-size:12px;margin-bottom:40px">Versión de la herramienta: v1.4 · solicitudes al cliente</p>
   </section>
   </div>
 </main>
@@ -482,6 +562,7 @@ h2.sec{font-size:19px;margin:26px 0 4px;font-weight:600}
       <div class="up" id="up"></div>
       <ul class="files" id="files"></ul>
     </div>
+    <div class="d-sec"><h4>Solicitudes al cliente relacionadas</h4><div id="d-reqs"></div></div>
     <div class="d-sec"><h4>Si no cumple</h4><p id="d-rec"></p></div>
   </div>
   <div class="d-foot"><span id="d-upd"></span><span class="sp"></span><button class="btn" id="d-prev">Anterior</button><button class="btn" id="d-next">Siguiente</button></div>
@@ -511,7 +592,10 @@ const byId = Object.fromEntries(SG.map(s=>[s.id,s]));
 const BUCKET = "evidencias";
 const HASH = location.hash;
 
-const S = { ev:{}, files:{}, clientes:[], cid:null, sel:null, user:null };
+const S = { ev:{}, files:{}, req:{}, reqOk:true, clientes:[], cid:null, sel:null, user:null, rqOpen:{} };
+const REQS = [{"k":"R01","cat":"Arranque","t":"Alcance y contactos","d":"Sitios, número de usuarios, servidores y equipos, qué queda fuera del alcance, y contactos de TI y seguridad por área.","sg":["17.1","17.2"],"a":"Ciberseguridad"},{"k":"R02","cat":"Arranque","t":"Diagrama de red actualizado","d":"Topología con sitios, enlaces, VLANs y zonas del firewall.","sg":["12.4","12.2","3.8"],"a":"Red"},{"k":"R03","cat":"Arranque","t":"Acceso de solo lectura a Microsoft 365","d":"Cuenta con roles Global Reader y Security Reader para revisar Secure Score, MFA, Intune y Defender.","sg":["5.1","5.3","5.4","6.3","6.5","4.10","4.11"],"a":"Aplicaciones en nube"},{"k":"R04","cat":"Arranque","t":"Acceso de solo lectura a la consola EDR / antivirus","d":"Usuario de solo lectura en Sophos Central u otra consola.","sg":["10.1","10.2","10.6","10.7","2.4","13.2"],"a":"Ciberseguridad"},{"k":"R05","cat":"Arranque","t":"Acceso de solo lectura al FortiGate o respaldo de configuración","d":"Usuario de solo lectura o archivo de respaldo (.conf). Enviar por canal seguro: incluye hashes de contraseñas.","sg":["12.1","12.3","4.6","4.7","8.2","8.4"],"a":"Ciberseguridad"},{"k":"R06","cat":"Inventarios","t":"Inventario de servidores","d":"Nombre, IP, sistema operativo y versión, rol, físico o virtual, ubicación y criticidad.","sg":["1.1","2.2","4.1"],"a":"Servidores"},{"k":"R07","cat":"Inventarios","t":"Inventario de PCs y laptops","d":"Nombre, sistema operativo y versión, usuario o área asignada, y si tiene cifrado de disco.","sg":["1.1","2.2","3.6"],"a":"Equipos de cómputo (PCs)"},{"k":"R08","cat":"Inventarios","t":"Inventario de firewalls y VPN","d":"Marca, modelo, versión de FortiOS y vigencia de licencias y suscripciones.","sg":["1.1","12.1","2.2"],"a":"Ciberseguridad"},{"k":"R09","cat":"Inventarios","t":"Inventario de equipos de red","d":"Switches, routers y access points con marca, modelo y firmware.","sg":["1.1","12.1"],"a":"Red"},{"k":"R10","cat":"Inventarios","t":"Inventario de software y aplicaciones de negocio","d":"Aplicaciones críticas con versión y listado de software instalado (desde EDR, Intune o SCCM).","sg":["2.1","2.2","2.3"],"a":"Ciberseguridad"},{"k":"R11","cat":"Inventarios","t":"Inventario de cuentas","d":"Usuarios de AD / Entra ID con último inicio de sesión, cuentas administrativas y cuentas de servicio con su dueño.","sg":["5.1","5.3","5.4","5.5","6.6"],"a":"Aplicaciones en nube"},{"k":"R12","cat":"Inventarios","t":"Proveedores de TI y servicios en nube","d":"Servicios contratados (nube, soporte, MSP) y su contacto.","sg":["15.1","15.3"],"a":"Ciberseguridad"},{"k":"R13","cat":"Inventarios","t":"Ubicación de datos sensibles","d":"Dónde se guardan: file servers, bases de datos, SharePoint u otros.","sg":["3.2","3.7","3.12"],"a":"Ciberseguridad"},{"k":"R14","cat":"Documentos","t":"Política de seguridad de la información y de contraseñas","d":"Versión vigente y fecha de aprobación.","sg":["3.1","5.2","4.1"],"a":"Ciberseguridad"},{"k":"R15","cat":"Documentos","t":"Proceso de altas, bajas y cambios de accesos","d":"Procedimiento y ejemplo de baja reciente.","sg":["6.1","6.2","6.8"],"a":"Aplicaciones en nube"},{"k":"R16","cat":"Documentos","t":"Proceso de parcheo y gestión de vulnerabilidades","d":"Frecuencia, ventanas de mantenimiento y responsables.","sg":["7.1","7.2"],"a":"Ciberseguridad"},{"k":"R17","cat":"Documentos","t":"Política de respaldos","d":"Qué se respalda, frecuencia, retención y dónde se guarda.","sg":["11.1"],"a":"Servidores"},{"k":"R18","cat":"Documentos","t":"Plan de respuesta a incidentes y contactos","d":"Roles, contactos internos y externos, y canal de reporte.","sg":["17.3","17.4","17.5","17.6","17.9"],"a":"Ciberseguridad"},{"k":"R19","cat":"Documentos","t":"Registros de capacitación y simulaciones de phishing","d":"Programa, temas y listas de asistencia del último año.","sg":["14.1","14.2","14.3","14.6","14.9"],"a":"Ciberseguridad"},{"k":"R20","cat":"Documentos","t":"Contratos o evaluaciones de proveedores críticos","d":"Cláusulas de seguridad y evaluaciones realizadas.","sg":["15.2","15.4","15.5"],"a":"Ciberseguridad"},{"k":"R21","cat":"Documentos","t":"Resultados de pentests, auditorías o escaneos previos","d":"Informes del último año y estado de remediación.","sg":["18.1","18.2","18.3","7.5","7.6"],"a":"Ciberseguridad"},{"k":"R22","cat":"Ciberseguridad","t":"Reporte de cobertura del EDR","d":"Equipos con agente contra el inventario, versiones y equipos desactualizados.","sg":["10.1","10.2","10.6"],"a":"Ciberseguridad"},{"k":"R23","cat":"Ciberseguridad","t":"Políticas del EDR","d":"Detección por comportamiento, anti-exploit, protección contra manipulación y control de USB.","sg":["10.4","10.5","10.7","13.7"],"a":"Ciberseguridad"},{"k":"R24","cat":"Ciberseguridad","t":"Perfiles de seguridad del FortiGate","d":"IPS, filtrado web y DNS, antivirus y control de aplicaciones aplicados a las políticas.","sg":["9.2","9.3","9.6","13.8","13.10"],"a":"Ciberseguridad"},{"k":"R25","cat":"Ciberseguridad","t":"Configuración de VPN y MFA","d":"Tipo de VPN, cifrado, autenticación centralizada y MFA.","sg":["6.4","12.7","13.5"],"a":"Ciberseguridad"},{"k":"R26","cat":"Ciberseguridad","t":"Monitoreo: fuentes de logs, retención y alertas","d":"Fuentes que llegan al SIEM, días de retención y alertas configuradas.","sg":["8.2","8.9","8.10","8.11","13.1","13.11"],"a":"Ciberseguridad"},{"k":"R27","cat":"Servidores","t":"Reporte de parches de servidores","d":"Desde WSUS, Intune, RMM o repositorios Linux.","sg":["7.3","7.4"],"a":"Servidores"},{"k":"R28","cat":"Servidores","t":"GPOs de seguridad o resultado de CIS-CAT de servidores","d":"Export de GPO o reporte de CIS-CAT por servidor.","sg":["4.1","4.4","4.8","8.5","8.8"],"a":"Servidores"},{"k":"R29","cat":"Servidores","t":"Administradores locales y LAPS","d":"Cuentas con privilegio local y evidencia de LAPS.","sg":["5.2","5.4","4.7"],"a":"Servidores"},{"k":"R30","cat":"Servidores","t":"Reporte de los últimos respaldos","d":"Trabajos de las últimas semanas con su resultado; cifrado de los respaldos.","sg":["11.2","11.3"],"a":"Servidores"},{"k":"R31","cat":"Servidores","t":"Evidencia de copia aislada o inmutable","d":"Copia offline, en nube o inmutable, con versiones.","sg":["11.4"],"a":"Servidores"},{"k":"R32","cat":"Servidores","t":"Acta de la última prueba de restauración","d":"Fecha, qué se restauró y resultado.","sg":["11.5"],"a":"Servidores"},{"k":"R33","cat":"PCs","t":"Reporte de cifrado de disco","d":"BitLocker o FileVault por equipo.","sg":["3.6"],"a":"Equipos de cómputo (PCs)"},{"k":"R34","cat":"PCs","t":"Reporte de parches de PCs","d":"Sistema operativo, navegadores y aplicaciones.","sg":["7.3","7.4","9.1"],"a":"Equipos de cómputo (PCs)"},{"k":"R35","cat":"PCs","t":"Políticas de bloqueo de pantalla, firewall y USB","d":"GPO, Intune o perfil MDM.","sg":["4.3","4.5","3.9","10.3"],"a":"Equipos de cómputo (PCs)"},{"k":"R36","cat":"PCs","t":"Usuarios con administrador local","d":"Listado o reporte desde EDR / Intune.","sg":["5.4"],"a":"Equipos de cómputo (PCs)"},{"k":"R37","cat":"Red","t":"Configuración de switches y access points","d":"Respaldo o capturas: SSH/HTTPS, SNMPv3, AAA (RADIUS/TACACS) y NTP.","sg":["12.3","12.5","12.6","8.4","4.2"],"a":"Red"},{"k":"R38","cat":"Red","t":"Segmentación de red","d":"VLANs y reglas de tráfico entre segmentos.","sg":["12.2","13.4","3.12"],"a":"Red"},{"k":"R39","cat":"Red","t":"Configuración Wi-Fi","d":"Red corporativa (WPA2/3-Enterprise) y red de invitados aislada.","sg":["12.6","12.2"],"a":"Red"},{"k":"R40","cat":"Red","t":"Puertos sin uso y 802.1X","d":"Puertos deshabilitados y control de acceso por puerto.","sg":["4.8","13.9"],"a":"Red"},{"k":"R41","cat":"Nube","t":"Secure Score de Microsoft 365","d":"Puntuación y detalle de acciones pendientes.","sg":["4.1","5.2","9.7"],"a":"Aplicaciones en nube"},{"k":"R42","cat":"Nube","t":"Reporte de MFA y Acceso condicional","d":"Estado de MFA por usuario y políticas de Acceso condicional.","sg":["6.3","6.4","6.5","6.7"],"a":"Aplicaciones en nube"},{"k":"R43","cat":"Nube","t":"Cuentas inactivas y administradores globales","d":"Usuarios sin actividad y quién tiene rol de administrador global.","sg":["5.3","5.4"],"a":"Aplicaciones en nube"},{"k":"R44","cat":"Nube","t":"Cumplimiento de Intune","d":"Políticas de bloqueo, cifrado y borrado remoto en equipos y móviles.","sg":["4.3","4.10","4.11","4.12","3.6"],"a":"Aplicaciones en nube"},{"k":"R45","cat":"Nube","t":"DLP y retención","d":"Políticas de prevención de fuga de datos y de retención, si existen.","sg":["3.4","3.13"],"a":"Aplicaciones en nube"},{"k":"R46","cat":"Nube","t":"SPF, DKIM y DMARC","d":"Lo verifica el SOC en el DNS del dominio; solo confirmar los dominios de correo.","sg":["9.5"],"a":"Aplicaciones en nube"}];
+const RQ_EST = ["Pendiente","Solicitado","Recibido","Validado","No existe","No aplica"];
+const RQ_CATS = ["Arranque","Inventarios","Documentos","Ciberseguridad","Servidores","PCs","Red","Nube","Otras"];
 let sb = null, channel = null;
 const $ = id => document.getElementById(id);
 const cur = () => S.clientes.find(c=>c.id===S.cid) || null;
@@ -574,10 +658,12 @@ function renderClientes(){
 async function loadCliente(cid){
   S.cid=cid; lsSet("hardening-cliente",cid); $("cli").value=cid; showNoCli(false); closeDrawer();
   setSync("on","Cargando…");
-  const [ev, fi] = await Promise.all([
+  const [ev, fi, rq] = await Promise.all([
     sb.from("evaluaciones").select("*").eq("cliente_id",cid),
-    sb.from("evidencias").select("*").eq("cliente_id",cid).order("subido_en")
+    sb.from("evidencias").select("*").eq("cliente_id",cid).order("subido_en"),
+    sb.from("solicitudes").select("*").eq("cliente_id",cid)
   ]);
+  S.req={}; S.reqOk=!rq.error; (rq.data||[]).forEach(r=>S.req[r.clave]=r);
   if(ev.error || fi.error){ setSync("err","Sin conexión"); banner("No se pudo cargar el checklist de este cliente."); return; }
   S.ev={}; (ev.data||[]).forEach(r=>S.ev[r.safeguard]=r);
   S.files={}; (fi.data||[]).forEach(r=>(S.files[r.safeguard]=S.files[r.safeguard]||[]).push(r));
@@ -594,12 +680,17 @@ function subscribe(cid){
       if(p.eventType==="DELETE"){ const r=p.old; if(r && r.safeguard) S.files[r.safeguard]=(S.files[r.safeguard]||[]).filter(x=>x.id!==r.id); }
       renderAll();
     })
+    .on("postgres_changes",{event:"*",schema:"public",table:"solicitudes",filter:"cliente_id=eq."+cid},p=>{
+      if(p.eventType==="DELETE"){ if(p.old && p.old.clave) delete S.req[p.old.clave]; }
+      else if(p.new && p.new.clave) S.req[p.new.clave]=p.new;
+      renderAll();
+    })
     .on("postgres_changes",{event:"UPDATE",schema:"public",table:"clientes",filter:"id=eq."+cid},p=>{
       const i=S.clientes.findIndex(c=>c.id===cid); if(i>=0){ S.clientes[i]=p.new; renderClientes(); renderAll(); }
     })
     .subscribe();
 }
-function teardown(){ if(channel && sb){ sb.removeChannel(channel); channel=null; } S.ev={}; S.files={}; S.clientes=[]; S.cid=null; closeDrawer(); }
+function teardown(){ if(channel && sb){ sb.removeChannel(channel); channel=null; } S.ev={}; S.files={}; S.req={}; S.clientes=[]; S.cid=null; closeDrawer(); }
 
 const queues={};
 function saveEval(id, patch){
@@ -640,12 +731,12 @@ async function signedUrl(path, download){
   if(error) return ""; urlCache[k]={url:data.signedUrl,exp:Date.now()+3300000}; return data.signedUrl;
 }
 const safeName = n => n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\w.\-]+/g,"_").slice(-120);
-async function addFiles(files){
-  const id=S.sel; if(!id || !S.cid) return; const up=$("up");
+async function addFiles(files, key, upEl){
+  const id=key||S.sel; if(!id || !S.cid) return; const up=upEl||$("up");
   for(const f of files){
     if(f.size>50*1048576){ up.textContent=f.name+": pesa más de 50 MB. Comprímelo o divídelo."; continue; }
     up.textContent="Subiendo "+f.name+"…";
-    const path=S.cid+"/"+id+"/"+Date.now()+"-"+safeName(f.name);
+    const path=S.cid+"/"+id.replace(":","-")+"/"+Date.now()+"-"+safeName(f.name);
     const u=await sb.storage.from(BUCKET).upload(path,f,{contentType:f.type||"application/octet-stream",upsert:false});
     if(u.error){ up.textContent=f.name+": no se pudo subir ("+u.error.message+")."; continue; }
     const { data, error } = await sb.from("evidencias").insert({cliente_id:S.cid,safeguard:id,nombre:f.name,tipo:f.type||"",bytes:f.size,ruta:path,subido_por_email:S.user.email}).select().single();
@@ -654,14 +745,15 @@ async function addFiles(files){
     up.textContent=f.name+" subido."; renderAll();
   }
 }
-async function removeEvidence(f){
+async function removeEvidence(f, upEl){
   if(!confirm("¿Quitar "+f.nombre+"? El archivo se borra para todo el equipo.")) return;
+  const up=upEl||$("up");
   const r=await sb.storage.from(BUCKET).remove([f.ruta]);
-  if(r.error){ $("up").textContent="No se pudo borrar "+f.nombre+": "+r.error.message; return; }
+  if(r.error){ up.textContent="No se pudo borrar "+f.nombre+": "+r.error.message; return; }
   const { error } = await sb.from("evidencias").delete().eq("id",f.id);
-  if(error){ $("up").textContent="El archivo se borró pero no su registro: "+error.message; }
+  if(error){ up.textContent="El archivo se borró pero no su registro: "+error.message; }
   S.files[f.safeguard]=(S.files[f.safeguard]||[]).filter(x=>x.id!==f.id);
-  $("up").textContent=f.nombre+" quitado."; renderAll();
+  up.textContent=f.nombre+" quitado."; renderAll();
 }
 async function openFile(f){
   const viewable=(f.tipo||"").startsWith("image/")||f.tipo==="application/pdf"||(f.tipo||"").startsWith("text/");
@@ -669,6 +761,172 @@ async function openFile(f){
   const url=await signedUrl(f.ruta, viewable?null:f.nombre);
   if(!url){ if(w) w.close(); $("up").textContent="No se pudo abrir "+f.nombre+"."; return; }
   if(w) w.location=url; else location.href=url;
+}
+
+
+/* ---------- Solicitudes al cliente ---------- */
+const reqKey = k => "req:"+k;
+function reqAll(){
+  const custom=Object.values(S.req).filter(r=>r.clave.startsWith("C-")).map(r=>({k:r.clave,cat:r.categoria||"Otras",t:r.titulo||"Solicitud",d:r.detalle||"",sg:(r.safeguards||[]).filter(x=>byId[x]),custom:true}));
+  return REQS.concat(custom);
+}
+const rqEst = k => (S.req[k]&&S.req[k].estado)||"Pendiente";
+function rqArea(q){
+  if(q.a && areasList().includes(q.a)) return q.a;
+  if(!q.sg.length) return areasList()[0];
+  const c={}; q.sg.forEach(id=>{ const a=areaOf(id); c[a]=(c[a]||0)+1; });
+  return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0];
+}
+const todayISO = () => new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+const isLate = k => { const r=S.req[k]; return r && r.fecha_compromiso && ["Pendiente","Solicitado"].includes(rqEst(k)) && r.fecha_compromiso < todayISO(); };
+const rqQueues={};
+function saveReq(k, patch){
+  if(!S.cid) return Promise.resolve();
+  const base=Object.assign({estado:"Pendiente",responsable_cliente:"",fecha_solicitud:null,fecha_compromiso:null,notas:""}, S.req[k]||{});
+  if(patch.estado==="Solicitado" && !base.fecha_solicitud && patch.fecha_solicitud===undefined) patch.fecha_solicitud=todayISO();
+  const row=Object.assign({}, base, patch, {cliente_id:S.cid, clave:k, actualizado_por_email:S.user.email, actualizado_en:new Date().toISOString()});
+  ["fecha_solicitud","fecha_compromiso"].forEach(f=>{ if(row[f]==="") row[f]=null; });
+  S.req[k]=row; renderAll();
+  if(!S.reqOk){ $("rq-missing").classList.remove("hidden"); return Promise.resolve(); }
+  setSync("on","Guardando…");
+  const q=(rqQueues[k]||Promise.resolve()).then(async()=>{
+    const { error } = await sb.from("solicitudes").upsert(row);
+    if(error){ setSync("err","Sin guardar"); if(/solicitudes/.test(error.message)){ S.reqOk=false; $("rq-missing").classList.remove("hidden"); } else banner("No se guardó la solicitud "+k+": "+error.message); }
+    else setSync("on","Guardado");
+  });
+  rqQueues[k]=q; return q;
+}
+async function addCustomReq(){
+  const tt=$("rqn-t").value.trim(); if(!tt){ $("rqn-msg").textContent="Escribe qué se va a pedir."; return; }
+  const sgs=$("rqn-sg").value.split(/[,\s]+/).map(x=>x.trim()).filter(Boolean);
+  const bad=sgs.filter(x=>!byId[x]); if(bad.length){ $("rqn-msg").textContent="No existen estos safeguards: "+bad.join(", "); return; }
+  const k="C-"+Date.now().toString(36);
+  await saveReq(k,{titulo:tt,categoria:$("rqn-cat").value||"Otras",safeguards:sgs,detalle:""});
+  $("rqn-t").value=""; $("rqn-sg").value=""; $("rqn-msg").textContent="Solicitud agregada."; S.rqOpen[k]=true; renderAll();
+}
+async function delCustomReq(k){
+  if((S.files[reqKey(k)]||[]).length){ alert("Quita primero sus evidencias."); return; }
+  if(!confirm("¿Eliminar esta solicitud personalizada?")) return;
+  delete S.req[k]; renderAll();
+  if(S.reqOk){ const { error } = await sb.from("solicitudes").delete().eq("cliente_id",S.cid).eq("clave",k); if(error) banner("No se pudo eliminar: "+error.message); }
+}
+function rqStats(list){
+  const r={total:0,Pendiente:0,Solicitado:0,Recibido:0,Validado:0,"No existe":0,"No aplica":0,late:0};
+  list.forEach(q=>{ r.total++; r[rqEst(q.k)]++; if(isLate(q.k)) r.late++; }); return r;
+}
+function sgChip(id){
+  const b=document.createElement("button"); b.className="sgchip"; b.title=byId[id].t;
+  const i=document.createElement("i"); const e=est(id); if(e) i.className=ST[e];
+  b.append(i,document.createTextNode(id)); b.onclick=()=>openDrawer(id); return b;
+}
+function fileList(key, upEl){
+  const ul=document.createElement("ul"); ul.className="files";
+  (S.files[key]||[]).forEach(f=>{
+    const li=document.createElement("li"); li.className="file";
+    const th=document.createElement("div"); th.className="thumb";
+    if((f.tipo||"").startsWith("image/")){ const im=document.createElement("img"); im.alt=""; signedUrl(f.ruta).then(u=>{ if(u) im.src=u; else th.textContent="—"; }); th.appendChild(im); }
+    else th.textContent=(f.nombre.split(".").pop()||"").toUpperCase().slice(0,4);
+    const mid=document.createElement("div");
+    const a=document.createElement("a"); a.href="#"; a.textContent=f.nombre; a.onclick=e=>{ e.preventDefault(); openFile(f); };
+    const sm=document.createElement("small"); sm.textContent=kb(f.bytes||0)+" · "+fmtDate(f.subido_en)+(f.subido_por_email?" · "+f.subido_por_email:"");
+    mid.append(a,sm);
+    const del=document.createElement("button"); del.textContent="Quitar"; del.onclick=()=>removeEvidence(f, upEl);
+    li.append(th,mid,del); ul.appendChild(li);
+  });
+  return ul;
+}
+function renderReqs(){
+  const host=$("rq-list"); if(!host) return;
+  $("rq-missing").classList.toggle("hidden", S.reqOk);
+  const all=reqAll(); const st=rqStats(all);
+  const open=st.Solicitado+st.Pendiente; $("rq-n").textContent = st.late ? String(st.late) : ""; $("rq-n").className = st.late ? "badge" : ""; $("rq-n").title = st.late ? st.late+(st.late===1?" solicitud vencida":" solicitudes vencidas") : "";
+  const ks=$("rq-stats"); ks.textContent="";
+  [["Sin solicitar",st.Pendiente,""],["Solicitadas",st.Solicitado,"s"],["Recibidas",st.Recibido,"r"],["Validadas",st.Validado,"v"],["No existen",st["No existe"],"x"],["Vencidas",st.late,"late"]].forEach(([l,n,c])=>{
+    const d=document.createElement("div"); d.className="kpi "+c; const nn=document.createElement("div"); nn.className="n"; nn.textContent=n; const ll=document.createElement("div"); ll.className="l"; ll.textContent=l; d.append(nn,ll); ks.appendChild(d); });
+  // filtros
+  const fc=$("rq-cat"), fe=$("rq-est"), fa=$("rq-area");
+  if(fc.options.length<=1){ RQ_CATS.forEach(c=>{ const o=document.createElement("option"); o.value=c; o.textContent=c; fc.appendChild(o); }); RQ_EST.forEach(c=>{ const o=document.createElement("option"); o.value=c; o.textContent=c; fe.appendChild(o); }); const o=document.createElement("option"); o.value="vencidas"; o.textContent="Vencidas"; fe.appendChild(o); }
+  const ka=fa.value; fa.textContent=""; const o0=document.createElement("option"); o0.value=""; o0.textContent="Todas las áreas"; fa.appendChild(o0);
+  areasList().forEach(a=>{ const o=document.createElement("option"); o.value=a; o.textContent=a; fa.appendChild(o); }); fa.value=areasList().includes(ka)?ka:"";
+  const nc=$("rqn-cat"); if(!nc.options.length) RQ_CATS.forEach(c=>{ const o=document.createElement("option"); o.value=c; o.textContent=c; nc.appendChild(o); });
+  const list=all.filter(q=>(!fc.value||q.cat===fc.value)&&(!fa.value||rqArea(q)===fa.value)&&(!fe.value||(fe.value==="vencidas"?isLate(q.k):rqEst(q.k)===fe.value)));
+  $("rq-count").textContent=list.length+" de "+all.length;
+  if(host.contains(document.activeElement) && ["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)) return;
+  host.textContent="";
+  RQ_CATS.forEach(cat=>{
+    const items=list.filter(q=>q.cat===cat); if(!items.length) return;
+    const gst=rqStats(all.filter(q=>q.cat===cat));
+    const g=document.createElement("div"); g.className="rq-group";
+    const h=document.createElement("div"); h.className="ghead";
+    const n=document.createElement("span"); n.className="num"; n.textContent="◆";
+    const tt=document.createElement("span"); tt.className="gt"; tt.textContent=cat;
+    const sm=document.createElement("small"); sm.textContent=(gst.Recibido+gst.Validado)+"/"+gst.total+" recibidas";
+    const mini=document.createElement("div"); mini.className="mini"; const mi=document.createElement("i"); mi.style.width=pct(gst.total?(gst.Recibido+gst.Validado+gst["No aplica"])/gst.total:0); mini.appendChild(mi);
+    h.append(n,tt,sm,mini); g.appendChild(h);
+    items.forEach(q=>{
+      const r=S.req[q.k]||{}; const e=rqEst(q.k);
+      const box=document.createElement("div"); box.className="rq"+(S.rqOpen[q.k]?" open":"");
+      const row=document.createElement("div"); row.className="rq-row";
+      const led=document.createElement("span"); led.className="led q-"+e.replace(" ",""); led.title=e;
+      const kk=document.createElement("span"); kk.className="rq-k"; kk.textContent=q.custom?"+":q.k;
+      const tl=document.createElement("div"); tl.className="rq-t"; tl.textContent=q.t; const ar=document.createElement("small"); ar.textContent=rqArea(q)+(enc(rqArea(q))?" · "+enc(rqArea(q)):""); tl.appendChild(ar);
+      tl.onclick=()=>{ S.rqOpen[q.k]=!S.rqOpen[q.k]; renderReqs(); };
+      const resp=document.createElement("input"); resp.className="rq-resp"; resp.placeholder="Responsable del cliente"; resp.value=r.responsable_cliente||""; resp.setAttribute("aria-label","Responsable del cliente");
+      resp.onchange=()=>saveReq(q.k,{responsable_cliente:resp.value.trim()});
+      const dt=document.createElement("input"); dt.type="date"; dt.className="rq-date"+(isLate(q.k)?" late":""); dt.value=r.fecha_compromiso||""; dt.title="Fecha compromiso"; dt.setAttribute("aria-label","Fecha compromiso");
+      dt.onchange=()=>saveReq(q.k,{fecha_compromiso:dt.value||null});
+      const se=document.createElement("select"); se.setAttribute("aria-label","Estado"); RQ_EST.forEach(x=>{ const o=document.createElement("option"); o.value=x; o.textContent=x; se.appendChild(o); }); se.value=e;
+      se.onchange=()=>saveReq(q.k,{estado:se.value});
+      const ev=document.createElement("span"); ev.className="rq-ev"; const nf=(S.files[reqKey(q.k)]||[]).length; ev.textContent=nf?"📎 "+nf:"";
+      const x=document.createElement("button"); x.className="rq-x"; x.textContent="›"; x.setAttribute("aria-label","Ver detalle"); x.onclick=()=>{ S.rqOpen[q.k]=!S.rqOpen[q.k]; renderReqs(); };
+      row.append(led,kk,tl,resp,dt,se,ev,x); box.appendChild(row);
+      // cuerpo
+      const body=document.createElement("div"); body.className="rq-body";
+      const left=document.createElement("div");
+      if(q.d){ const p=document.createElement("p"); p.style.margin="0 0 10px"; p.style.color="var(--ink2)"; p.style.fontSize="13.5px"; p.textContent=q.d; left.appendChild(p); }
+      const sgs=document.createElement("div"); sgs.className="rq-sgs"; q.sg.forEach(id=>sgs.appendChild(sgChip(id))); if(!q.sg.length){ const s0=document.createElement("small"); s0.style.color="var(--muted)"; s0.textContent="Sin safeguards ligados"; sgs.appendChild(s0); } left.appendChild(sgs);
+      const ta=document.createElement("textarea"); ta.placeholder="Notas: qué se pidió, a quién, cómo se entregó, observaciones…"; ta.value=r.notas||""; ta.onchange=()=>saveReq(q.k,{notas:ta.value}); left.appendChild(ta);
+      const meta=document.createElement("div"); meta.className="rq-meta"; meta.textContent=(r.fecha_solicitud?"Solicitada "+r.fecha_solicitud+" · ":"")+(r.actualizado_en?"Actualizado "+fmtDate(r.actualizado_en)+(r.actualizado_por_email?" por "+r.actualizado_por_email:""):"Sin cambios todavía"); left.appendChild(meta);
+      if(q.custom){ const d=document.createElement("button"); d.className="rq-del"; d.textContent="Eliminar solicitud"; d.onclick=()=>delCustomReq(q.k); left.appendChild(d); }
+      const right=document.createElement("div");
+      const up=document.createElement("div"); up.className="up";
+      const drop=document.createElement("div"); drop.className="drop";
+      const inp=document.createElement("input"); inp.type="file"; inp.multiple=true; inp.className="hidden"; inp.id="rqf-"+q.k;
+      const lab=document.createElement("label"); lab.htmlFor=inp.id; lab.textContent="elígelos";
+      drop.append(document.createTextNode("Arrastra la evidencia aquí o "),lab,inp);
+      inp.onchange=()=>{ addFiles([...inp.files], reqKey(q.k), up).then(()=>{ if(rqEst(q.k)==="Pendiente"||rqEst(q.k)==="Solicitado") saveReq(q.k,{estado:"Recibido"}); }); inp.value=""; };
+      ["dragenter","dragover"].forEach(tp=>drop.addEventListener(tp,ev2=>{ ev2.preventDefault(); drop.classList.add("over"); }));
+      ["dragleave","drop"].forEach(tp=>drop.addEventListener(tp,ev2=>{ ev2.preventDefault(); drop.classList.remove("over"); }));
+      drop.addEventListener("drop",ev2=>{ addFiles([...(ev2.dataTransfer.files||[])], reqKey(q.k), up).then(()=>{ if(rqEst(q.k)==="Pendiente"||rqEst(q.k)==="Solicitado") saveReq(q.k,{estado:"Recibido"}); }); });
+      right.append(drop,up,fileList(reqKey(q.k), up));
+      body.append(left,right); box.appendChild(body);
+      g.appendChild(box);
+    });
+    host.appendChild(g);
+  });
+}
+function exportReqs(){
+  const esc=v=>{ v=String(v==null?"":v); return /[",\n;]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
+  const lines=[["#","Categoría","Qué necesitamos","Detalle","Responsable del cliente","Fecha compromiso","Estado"].join(",")];
+  reqAll().filter(q=>rqEst(q.k)!=="No aplica").forEach((q,i)=>{ const r=S.req[q.k]||{}; lines.push([i+1,q.cat,q.t,q.d,r.responsable_cliente||"",r.fecha_compromiso||"",rqEst(q.k)].map(esc).join(",")); });
+  const blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv"}); const u=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=u; a.download="solicitud-informacion-"+((cur()||{}).nombre||"cliente").replace(/[^\w-]+/g,"-")+".csv"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000);
+}
+function renderDrawerReqs(id){
+  const host=$("d-reqs"); host.textContent="";
+  const rel=reqAll().filter(q=>q.sg.includes(id));
+  if(!rel.length){ const p=document.createElement("p"); p.textContent="Ninguna solicitud ligada a este safeguard."; host.appendChild(p); return; }
+  rel.forEach(q=>{
+    const d=document.createElement("div"); d.className="dreq";
+    const led=document.createElement("span"); led.className="led q-"+rqEst(q.k).replace(" ",""); led.title=rqEst(q.k);
+    const k=document.createElement("b"); k.textContent=q.custom?"+":q.k;
+    const b=document.createElement("button"); b.textContent=q.t; b.onclick=()=>{ closeDrawer(); S.rqOpen[q.k]=true; $("rq-cat").value=""; $("rq-est").value=""; $("rq-area").value=""; showTab("solicitudes"); renderReqs(); };
+    const p=document.createElement("span"); p.className="pill"; p.textContent=rqEst(q.k);
+    d.append(led,k,b,p);
+    const fs=S.files[reqKey(q.k)]||[];
+    if(fs.length){ const w=document.createElement("div"); w.className="dreq-files"; fs.forEach(f=>{ const a=document.createElement("a"); a.href="#"; a.textContent="📎 "+f.nombre; a.onclick=e=>{ e.preventDefault(); openFile(f); }; w.appendChild(a); }); d.appendChild(w); }
+    host.appendChild(d);
+  });
 }
 
 /* ---------- Render ---------- */
@@ -788,7 +1046,7 @@ function renderCfg(){
     inp.value = a ? enc(a) : (c[inp.dataset.k]||"");
   });
 }
-function renderAll(){ if(!S.cid) return; renderAreas(); renderHero(); renderList(); renderFindings(); renderResumen(); renderCfg(); if(S.sel) renderDrawer(); }
+function renderAll(){ if(!S.cid) return; renderAreas(); renderHero(); renderList(); renderReqs(); renderFindings(); renderResumen(); renderCfg(); if(S.sel) renderDrawer(); }
 
 /* ---------- Panel ---------- */
 let notesTimer=null;
@@ -808,7 +1066,7 @@ function renderDrawer(){
       dd.append(sel,en);
     } else dd.textContent=v;
     w.append(dt,dd); dl.appendChild(w); });
-  $("d-crit").textContent=s.cr; $("d-rec").textContent=s.rc;
+  $("d-crit").textContent=s.cr; $("d-rec").textContent=s.rc; renderDrawerReqs(s.id);
   document.querySelectorAll("#d-seg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.s===ev.estado)));
   $("d-clear").classList.toggle("hidden",!ev.estado);
   const ta=$("d-notes"); if(document.activeElement!==ta || ta.dataset.id!==s.id){ ta.value=ev.notas||""; ta.dataset.id=s.id; }
@@ -935,6 +1193,9 @@ function initUI(){
   ["dragleave","drop"].forEach(t=>drop.addEventListener(t,e=>{ e.preventDefault(); drop.classList.remove("over"); }));
   drop.addEventListener("drop",e=>addFiles([...(e.dataTransfer.files||[])]));
   $("export").onclick=exportCsv;
+  $("rq-export").onclick=exportReqs;
+  $("rqn-add").onclick=addCustomReq;
+  ["rq-cat","rq-est","rq-area"].forEach(x=>$(x).addEventListener("change",renderReqs));
   $("na-add").onclick=()=>{ addArea($("na-name").value); $("na-name").value=""; };
   $("na-name").addEventListener("keydown",e=>{ if(e.key==="Enter"){ addArea($("na-name").value); $("na-name").value=""; } });
   $("na-reset").onclick=resetAreas;
