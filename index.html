@@ -417,6 +417,20 @@ nav.tabs button{padding-left:10px;padding-right:10px}
 .brand b{max-width:100%}
 nav.tabs{flex:0 0 auto}
 .top .wrap > .cli,.top .wrap > .sync,.top .wrap > .btn{flex:0 0 auto}
+
+/* ---------- Roles ---------- */
+.role-cliente .soc-only{display:none!important}
+.d-sec h4 .int{font:500 11px var(--mono);color:var(--dim);margin-left:6px}
+.role-cliente .seg button{cursor:default}
+.role-cliente .seg button:disabled{opacity:1}
+#t-users select{border:1px solid var(--line2);border-radius:6px;padding:6px 8px;background:var(--bg2);color:var(--ink);font-size:13px}
+#t-users td:first-child{font-family:var(--mono);font-size:12.5px}
+.tagrol{font:600 11px var(--mono);border-radius:4px;padding:2px 7px;background:var(--na-a);color:var(--muted)}
+.tagrol.soc{background:var(--ok-a);color:var(--teal)} .tagrol.cliente{background:var(--warn-a);color:var(--warn)}
+.role-chip{font:600 11px var(--mono);color:var(--warn);border:1px solid rgba(227,167,63,.5);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.brand .unit{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.role-cliente .rq-row input:disabled,.role-cliente .rq-row select:disabled,.role-cliente .asel:disabled{background:transparent;border-color:transparent;-webkit-appearance:none;appearance:none;color:var(--ink2);opacity:1;padding-left:0}
+.role-cliente .rq-row input[type=date]:disabled::-webkit-calendar-picker-indicator{display:none}
 </style>
 </head>
 <body>
@@ -427,7 +441,7 @@ nav.tabs{flex:0 0 auto}
       <h2>SOC MitelcomSec</h2>
       <div class="grid" id="lg-grid"></div>
     </div>
-    <div class="foot">Acceso restringido al equipo · v1.7</div>
+    <div class="foot">Acceso restringido al equipo · v1.8</div>
   </div>
   <div class="form-side">
     <div class="card">
@@ -462,11 +476,13 @@ nav.tabs{flex:0 0 auto}
       <button role="tab" data-tab="solicitudes" aria-selected="false">Solicitudes <span id="rq-n"></span></button>
       <button role="tab" data-tab="hallazgos" aria-selected="false">Hallazgos <span id="hz-n"></span></button>
       <button role="tab" data-tab="resumen" aria-selected="false">Resumen</button>
-      <button role="tab" data-tab="encargados" aria-selected="false">Cliente</button>
+      <button role="tab" data-tab="encargados" aria-selected="false" class="soc-only">Cliente</button>
+      <button role="tab" data-tab="usuarios" aria-selected="false" class="soc-only">Usuarios</button>
     </nav>
-    <select class="cli" id="cli" aria-label="Cliente"></select>
+    <select class="cli soc-only" id="cli" aria-label="Cliente"></select>
     <div class="sync" id="sync"><i></i><span>Conectando…</span></div>
-    <button class="btn" id="export" title="Exportar checklist en CSV">CSV</button>
+    <button class="btn soc-only" id="export" title="Exportar checklist en CSV">CSV</button>
+    <span class="role-chip hidden" id="rolechip">Vista cliente</span>
     <span class="who" id="who"></span>
     <button class="btn theme-btn" id="theme" aria-label="Cambiar a tema claro" title="Cambiar a tema claro">☀️</button>
     <button class="btn" id="acct" title="Mi cuenta" aria-label="Mi cuenta">👤</button>
@@ -488,6 +504,14 @@ nav.tabs{flex:0 0 auto}
       <h3>Nuevo cliente</h3>
       <div class="newcli" style="margin:0"><input id="nc-name-0" placeholder="Nombre del cliente"><button class="btn primary" data-new="0">Crear cliente</button></div>
     </div>
+  </section>
+
+  <section class="hidden" id="noacc">
+    <div class="hero-band"><div>
+      <div class="unit">SOC MitelcomSec</div>
+      <h1>Tu cuenta aún no tiene acceso</h1>
+      <p>Pide al equipo SOC que te asigne permisos. En cuanto lo hagan, vuelve a entrar.</p>
+    </div></div>
   </section>
 
   <div id="app">
@@ -560,7 +584,7 @@ nav.tabs{flex:0 0 auto}
     </div>
     <div class="banner-in hidden" id="rq-missing">Para guardar las solicitudes falta correr una vez el script <b>supabase_solicitudes.sql</b> en Supabase (SQL Editor → New query → Run). Mientras tanto puedes consultar la lista.</div>
     <div id="rq-list"></div>
-    <div class="tile rq-new">
+    <div class="tile rq-new soc-only">
       <h3>Agregar solicitud personalizada</h3>
       <div class="rq-new-grid">
         <input id="rqn-t" placeholder="Qué se pide (p. ej. Reporte de licencias de Veeam)">
@@ -570,6 +594,14 @@ nav.tabs{flex:0 0 auto}
       </div>
       <div class="up" id="rqn-msg"></div>
     </div>
+  </section>
+
+  <section data-panel="usuarios" class="hidden soc-only">
+    <h2 class="sec">Usuarios y accesos</h2>
+    <p class="lead">Para dar acceso: crea el usuario en Supabase (Authentication → Users → Add user, con Auto Confirm) y aquí asígnale su rol. Los usuarios nuevos entran <b>sin acceso</b> hasta que les asignes uno.</p>
+    <div class="banner-in hidden" id="us-missing">Para administrar roles falta correr una vez el script <b>supabase_roles.sql</b> en Supabase.</div>
+    <div class="panel"><table id="t-users"></table></div>
+    <p class="lead" style="font-size:12.5px;margin-bottom:40px"><b>SOC</b>: ve y edita todos los clientes. <b>Cliente</b>: ve solo su empresa (tablero, hallazgos y recomendaciones) y sube evidencias en Solicitudes; no ve notas internas ni puede calificar. <b>Sin acceso</b>: no ve nada.</p>
   </section>
 
   <section data-panel="hallazgos" class="hidden">
@@ -611,7 +643,7 @@ nav.tabs{flex:0 0 auto}
     <div class="newcli"><input id="na-name" placeholder="Nombre de la nueva área (p. ej. Telefonía IP)"><button class="btn primary" id="na-add">Agregar área</button><button class="btn" id="na-reset">Restablecer predeterminadas</button></div>
     <h2 class="sec">Agregar otro cliente</h2>
     <div class="newcli"><input id="nc-name-1" placeholder="Nombre del cliente"><button class="btn primary" data-new="1">Crear cliente</button></div>
-    <p class="lead mono" style="font-size:12px;margin-bottom:40px">Versión de la herramienta: v1.7 · logo de cliente</p>
+    <p class="lead mono" style="font-size:12px;margin-bottom:40px">Versión de la herramienta: v1.8 · roles SOC y cliente</p>
   </section>
   </div>
 </main>
@@ -646,13 +678,13 @@ nav.tabs{flex:0 0 auto}
         <button data-s="No cumple" class="s-nocumple">No cumple</button>
         <button data-s="No aplica" class="s-noaplica">No aplica</button>
       </div>
-      <button class="clear" id="d-clear">Dejar como pendiente</button>
+      <button class="clear soc-only" id="d-clear">Dejar como pendiente</button>
     </div>
-    <div class="d-sec"><h4>Notas</h4>
+    <div class="d-sec soc-only"><h4>Notas internas <small class="int">solo visibles para el SOC</small></h4>
       <textarea id="d-notes" placeholder="Qué revisaste, dónde está la evidencia, justificación de No aplica…"></textarea>
       <div class="saved" id="d-saved"></div>
     </div>
-    <div class="d-sec"><h4>Evidencias</h4>
+    <div class="d-sec soc-only"><h4>Evidencias</h4>
       <div class="drop" id="drop">Arrastra archivos aquí o <label for="file">elígelos</label><br><small>Cualquier archivo hasta 50 MB: capturas, PDF, Word, Excel, exportes de consola.</small>
         <input type="file" id="file" multiple class="hidden">
       </div>
@@ -689,13 +721,15 @@ const byId = Object.fromEntries(SG.map(s=>[s.id,s]));
 const BUCKET = "evidencias";
 const HASH = location.hash;
 
-const S = { ev:{}, files:{}, req:{}, reqOk:true, clientes:[], cid:null, sel:null, user:null, rqOpen:{} };
+const S = { role:"soc", myCli:null, rolesOk:true, notas:{}, notasOk:false, perfiles:[], ev:{}, files:{}, req:{}, reqOk:true, clientes:[], cid:null, sel:null, user:null, rqOpen:{} };
 const REQS = [{"k":"R01","cat":"Arranque","t":"Alcance y contactos","d":"Sitios, número de usuarios, servidores y equipos, qué queda fuera del alcance, y contactos de TI y seguridad por área.","sg":["17.1","17.2"],"a":"Ciberseguridad"},{"k":"R02","cat":"Arranque","t":"Diagrama de red actualizado","d":"Topología con sitios, enlaces, VLANs y zonas del firewall.","sg":["12.4","12.2","3.8"],"a":"Red"},{"k":"R03","cat":"Arranque","t":"Acceso de solo lectura a Microsoft 365","d":"Cuenta con roles Global Reader y Security Reader para revisar Secure Score, MFA, Intune y Defender.","sg":["5.1","5.3","5.4","6.3","6.5","4.10","4.11"],"a":"Aplicaciones en nube"},{"k":"R04","cat":"Arranque","t":"Acceso de solo lectura a la consola EDR / antivirus","d":"Usuario de solo lectura en Sophos Central u otra consola.","sg":["10.1","10.2","10.6","10.7","2.4","13.2"],"a":"Ciberseguridad"},{"k":"R05","cat":"Arranque","t":"Acceso de solo lectura al FortiGate o respaldo de configuración","d":"Usuario de solo lectura o archivo de respaldo (.conf). Enviar por canal seguro: incluye hashes de contraseñas.","sg":["12.1","12.3","4.6","4.7","8.2","8.4"],"a":"Ciberseguridad"},{"k":"R06","cat":"Inventarios","t":"Inventario de servidores","d":"Nombre, IP, sistema operativo y versión, rol, físico o virtual, ubicación y criticidad.","sg":["1.1","2.2","4.1"],"a":"Servidores"},{"k":"R07","cat":"Inventarios","t":"Inventario de PCs y laptops","d":"Nombre, sistema operativo y versión, usuario o área asignada, y si tiene cifrado de disco.","sg":["1.1","2.2","3.6"],"a":"Equipos de cómputo (PCs)"},{"k":"R08","cat":"Inventarios","t":"Inventario de firewalls y VPN","d":"Marca, modelo, versión de FortiOS y vigencia de licencias y suscripciones.","sg":["1.1","12.1","2.2"],"a":"Ciberseguridad"},{"k":"R09","cat":"Inventarios","t":"Inventario de equipos de red","d":"Switches, routers y access points con marca, modelo y firmware.","sg":["1.1","12.1"],"a":"Red"},{"k":"R10","cat":"Inventarios","t":"Inventario de software y aplicaciones de negocio","d":"Aplicaciones críticas con versión y listado de software instalado (desde EDR, Intune o SCCM).","sg":["2.1","2.2","2.3"],"a":"Ciberseguridad"},{"k":"R11","cat":"Inventarios","t":"Inventario de cuentas","d":"Usuarios de AD / Entra ID con último inicio de sesión, cuentas administrativas y cuentas de servicio con su dueño.","sg":["5.1","5.3","5.4","5.5","6.6"],"a":"Aplicaciones en nube"},{"k":"R12","cat":"Inventarios","t":"Proveedores de TI y servicios en nube","d":"Servicios contratados (nube, soporte, MSP) y su contacto.","sg":["15.1","15.3"],"a":"Ciberseguridad"},{"k":"R13","cat":"Inventarios","t":"Ubicación de datos sensibles","d":"Dónde se guardan: file servers, bases de datos, SharePoint u otros.","sg":["3.2","3.7","3.12"],"a":"Ciberseguridad"},{"k":"R14","cat":"Documentos","t":"Política de seguridad de la información y de contraseñas","d":"Versión vigente y fecha de aprobación.","sg":["3.1","5.2","4.1"],"a":"Ciberseguridad"},{"k":"R15","cat":"Documentos","t":"Proceso de altas, bajas y cambios de accesos","d":"Procedimiento y ejemplo de baja reciente.","sg":["6.1","6.2","6.8"],"a":"Aplicaciones en nube"},{"k":"R16","cat":"Documentos","t":"Proceso de parcheo y gestión de vulnerabilidades","d":"Frecuencia, ventanas de mantenimiento y responsables.","sg":["7.1","7.2"],"a":"Ciberseguridad"},{"k":"R17","cat":"Documentos","t":"Política de respaldos","d":"Qué se respalda, frecuencia, retención y dónde se guarda.","sg":["11.1"],"a":"Servidores"},{"k":"R18","cat":"Documentos","t":"Plan de respuesta a incidentes y contactos","d":"Roles, contactos internos y externos, y canal de reporte.","sg":["17.3","17.4","17.5","17.6","17.9"],"a":"Ciberseguridad"},{"k":"R19","cat":"Documentos","t":"Registros de capacitación y simulaciones de phishing","d":"Programa, temas y listas de asistencia del último año.","sg":["14.1","14.2","14.3","14.6","14.9"],"a":"Ciberseguridad"},{"k":"R20","cat":"Documentos","t":"Contratos o evaluaciones de proveedores críticos","d":"Cláusulas de seguridad y evaluaciones realizadas.","sg":["15.2","15.4","15.5"],"a":"Ciberseguridad"},{"k":"R21","cat":"Documentos","t":"Resultados de pentests, auditorías o escaneos previos","d":"Informes del último año y estado de remediación.","sg":["18.1","18.2","18.3","7.5","7.6"],"a":"Ciberseguridad"},{"k":"R22","cat":"Ciberseguridad","t":"Reporte de cobertura del EDR","d":"Equipos con agente contra el inventario, versiones y equipos desactualizados.","sg":["10.1","10.2","10.6"],"a":"Ciberseguridad"},{"k":"R23","cat":"Ciberseguridad","t":"Políticas del EDR","d":"Detección por comportamiento, anti-exploit, protección contra manipulación y control de USB.","sg":["10.4","10.5","10.7","13.7"],"a":"Ciberseguridad"},{"k":"R24","cat":"Ciberseguridad","t":"Perfiles de seguridad del FortiGate","d":"IPS, filtrado web y DNS, antivirus y control de aplicaciones aplicados a las políticas.","sg":["9.2","9.3","9.6","13.8","13.10"],"a":"Ciberseguridad"},{"k":"R25","cat":"Ciberseguridad","t":"Configuración de VPN y MFA","d":"Tipo de VPN, cifrado, autenticación centralizada y MFA.","sg":["6.4","12.7","13.5"],"a":"Ciberseguridad"},{"k":"R26","cat":"Ciberseguridad","t":"Monitoreo: fuentes de logs, retención y alertas","d":"Fuentes que llegan al SIEM, días de retención y alertas configuradas.","sg":["8.2","8.9","8.10","8.11","13.1","13.11"],"a":"Ciberseguridad"},{"k":"R27","cat":"Servidores","t":"Reporte de parches de servidores","d":"Desde WSUS, Intune, RMM o repositorios Linux.","sg":["7.3","7.4"],"a":"Servidores"},{"k":"R28","cat":"Servidores","t":"GPOs de seguridad o resultado de CIS-CAT de servidores","d":"Export de GPO o reporte de CIS-CAT por servidor.","sg":["4.1","4.4","4.8","8.5","8.8"],"a":"Servidores"},{"k":"R29","cat":"Servidores","t":"Administradores locales y LAPS","d":"Cuentas con privilegio local y evidencia de LAPS.","sg":["5.2","5.4","4.7"],"a":"Servidores"},{"k":"R30","cat":"Servidores","t":"Reporte de los últimos respaldos","d":"Trabajos de las últimas semanas con su resultado; cifrado de los respaldos.","sg":["11.2","11.3"],"a":"Servidores"},{"k":"R31","cat":"Servidores","t":"Evidencia de copia aislada o inmutable","d":"Copia offline, en nube o inmutable, con versiones.","sg":["11.4"],"a":"Servidores"},{"k":"R32","cat":"Servidores","t":"Acta de la última prueba de restauración","d":"Fecha, qué se restauró y resultado.","sg":["11.5"],"a":"Servidores"},{"k":"R33","cat":"PCs","t":"Reporte de cifrado de disco","d":"BitLocker o FileVault por equipo.","sg":["3.6"],"a":"Equipos de cómputo (PCs)"},{"k":"R34","cat":"PCs","t":"Reporte de parches de PCs","d":"Sistema operativo, navegadores y aplicaciones.","sg":["7.3","7.4","9.1"],"a":"Equipos de cómputo (PCs)"},{"k":"R35","cat":"PCs","t":"Políticas de bloqueo de pantalla, firewall y USB","d":"GPO, Intune o perfil MDM.","sg":["4.3","4.5","3.9","10.3"],"a":"Equipos de cómputo (PCs)"},{"k":"R36","cat":"PCs","t":"Usuarios con administrador local","d":"Listado o reporte desde EDR / Intune.","sg":["5.4"],"a":"Equipos de cómputo (PCs)"},{"k":"R37","cat":"Red","t":"Configuración de switches y access points","d":"Respaldo o capturas: SSH/HTTPS, SNMPv3, AAA (RADIUS/TACACS) y NTP.","sg":["12.3","12.5","12.6","8.4","4.2"],"a":"Red"},{"k":"R38","cat":"Red","t":"Segmentación de red","d":"VLANs y reglas de tráfico entre segmentos.","sg":["12.2","13.4","3.12"],"a":"Red"},{"k":"R39","cat":"Red","t":"Configuración Wi-Fi","d":"Red corporativa (WPA2/3-Enterprise) y red de invitados aislada.","sg":["12.6","12.2"],"a":"Red"},{"k":"R40","cat":"Red","t":"Puertos sin uso y 802.1X","d":"Puertos deshabilitados y control de acceso por puerto.","sg":["4.8","13.9"],"a":"Red"},{"k":"R41","cat":"Nube","t":"Secure Score de Microsoft 365","d":"Puntuación y detalle de acciones pendientes.","sg":["4.1","5.2","9.7"],"a":"Aplicaciones en nube"},{"k":"R42","cat":"Nube","t":"Reporte de MFA y Acceso condicional","d":"Estado de MFA por usuario y políticas de Acceso condicional.","sg":["6.3","6.4","6.5","6.7"],"a":"Aplicaciones en nube"},{"k":"R43","cat":"Nube","t":"Cuentas inactivas y administradores globales","d":"Usuarios sin actividad y quién tiene rol de administrador global.","sg":["5.3","5.4"],"a":"Aplicaciones en nube"},{"k":"R44","cat":"Nube","t":"Cumplimiento de Intune","d":"Políticas de bloqueo, cifrado y borrado remoto en equipos y móviles.","sg":["4.3","4.10","4.11","4.12","3.6"],"a":"Aplicaciones en nube"},{"k":"R45","cat":"Nube","t":"DLP y retención","d":"Políticas de prevención de fuga de datos y de retención, si existen.","sg":["3.4","3.13"],"a":"Aplicaciones en nube"},{"k":"R46","cat":"Nube","t":"SPF, DKIM y DMARC","d":"Lo verifica el SOC en el DNS del dominio; solo confirmar los dominios de correo.","sg":["9.5"],"a":"Aplicaciones en nube"}];
 const RQ_EST = ["Pendiente","Solicitado","Recibido","Validado","No existe","No aplica"];
 const RQ_CATS = ["Arranque","Inventarios","Documentos","Ciberseguridad","Servidores","PCs","Red","Nube","Otras"];
 let sb = null, channel = null;
 const $ = id => document.getElementById(id);
 const cur = () => S.clientes.find(c=>c.id===S.cid) || null;
+const isCli = () => S.role==="cliente";
+const notaOf = id => S.notasOk ? ((S.notas[id]||{}).notas||"") : ((S.ev[id]||{}).notas||"");
 const est = id => (S.ev[id] && S.ev[id].estado) || "";
 const enc = a => { const v=((cur()||{}).encargados||{})[a]; return typeof v==="string" ? v : ""; };
 const filesOf = id => S.files[id] || [];
@@ -739,15 +773,30 @@ async function init(){
 async function start(){
   $("who").textContent = S.user.email || "";
   setSync("on","Conectando…");
+  const pr = await sb.from("perfiles").select("*").eq("user_id", S.user.id).maybeSingle();
+  if(pr.error){ S.rolesOk=false; S.role="soc"; }
+  else { S.rolesOk=true; S.role=(pr.data&&pr.data.rol)||"pendiente"; S.myCli=(pr.data&&pr.data.cliente_id)||null; }
+  applyRole();
+  if(S.role==="pendiente" || (S.role==="cliente" && !S.myCli)){ showNoAccess(); return; }
   const { data, error } = await sb.from("clientes").select("*").order("nombre");
   if(error){ setSync("err","Sin conexión"); banner("No se pudieron cargar los clientes. Revisa que corriste el script SQL en Supabase."); return; }
   S.clientes = data || [];
   renderClientes();
   const saved = lsGet("hardening-cliente");
-  const pick = S.clientes.find(c=>c.id===saved) ? saved : (S.clientes[0]||{}).id;
+  const pick = isCli() ? S.myCli : (S.clientes.find(c=>c.id===saved) ? saved : (S.clientes[0]||{}).id);
   if(pick) await loadCliente(pick); else showNoCli(true);
 }
-function showNoCli(on){ $("nocli").classList.toggle("hidden",!on); $("app").classList.toggle("hidden",on); $("cli").classList.toggle("hidden",on); setSync("on", on?"Sin clientes":"Conectado"); }
+function applyRole(){
+  document.body.classList.toggle("role-cliente", isCli());
+  $("rolechip").classList.toggle("hidden", !isCli());
+  if(isCli()) showTab("checklist");
+}
+function showNoAccess(){
+  ["app","nocli"].forEach(x=>$(x).classList.add("hidden")); $("noacc").classList.remove("hidden");
+  document.querySelectorAll("nav.tabs, #cli, #export").forEach(el=>el.classList.add("hidden")); setSync("err","Sin acceso");
+}
+function showNoCli(on){
+  if(isCli()) on=false; $("nocli").classList.toggle("hidden",!on); $("app").classList.toggle("hidden",on); $("cli").classList.toggle("hidden",on); setSync("on", on?"Sin clientes":"Conectado"); }
 function renderClientes(){
   const sel=$("cli"); sel.textContent="";
   S.clientes.forEach(c=>{ const o=document.createElement("option"); o.value=c.id; o.textContent=c.nombre; sel.appendChild(o); });
@@ -756,11 +805,13 @@ function renderClientes(){
 async function loadCliente(cid){
   S.cid=cid; logoShown=undefined; lsSet("hardening-cliente",cid); $("cli").value=cid; showNoCli(false); closeDrawer();
   setSync("on","Cargando…");
-  const [ev, fi, rq] = await Promise.all([
+  const [ev, fi, rq, nt] = await Promise.all([
     sb.from("evaluaciones").select("*").eq("cliente_id",cid),
     sb.from("evidencias").select("*").eq("cliente_id",cid).order("subido_en"),
-    sb.from("solicitudes").select("*").eq("cliente_id",cid)
+    sb.from("solicitudes").select("*").eq("cliente_id",cid),
+    isCli() ? Promise.resolve({data:[],error:{message:"cliente"}}) : sb.from("notas_internas").select("*").eq("cliente_id",cid)
   ]);
+  S.notas={}; S.notasOk = !isCli() && S.rolesOk && !nt.error; (nt.data||[]).forEach(r=>S.notas[r.safeguard]=r);
   S.req={}; S.reqOk=!rq.error; (rq.data||[]).forEach(r=>S.req[r.clave]=r);
   if(ev.error || fi.error){ setSync("err","Sin conexión"); banner("No se pudo cargar el checklist de este cliente."); return; }
   S.ev={}; (ev.data||[]).forEach(r=>S.ev[r.safeguard]=r);
@@ -778,6 +829,9 @@ function subscribe(cid){
       if(p.eventType==="DELETE"){ const r=p.old; if(r && r.safeguard) S.files[r.safeguard]=(S.files[r.safeguard]||[]).filter(x=>x.id!==r.id); }
       renderAll();
     })
+    .on("postgres_changes",{event:"*",schema:"public",table:"notas_internas",filter:"cliente_id=eq."+cid},p=>{
+      if(p.new && p.new.safeguard){ S.notas[p.new.safeguard]=p.new; renderAll(); }
+    })
     .on("postgres_changes",{event:"*",schema:"public",table:"solicitudes",filter:"cliente_id=eq."+cid},p=>{
       if(p.eventType==="DELETE"){ if(p.old && p.old.clave) delete S.req[p.old.clave]; }
       else if(p.new && p.new.clave) S.req[p.new.clave]=p.new;
@@ -791,12 +845,23 @@ function subscribe(cid){
 function teardown(){ if(channel && sb){ sb.removeChannel(channel); channel=null; } S.ev={}; S.files={}; S.req={}; S.clientes=[]; S.cid=null; closeDrawer(); }
 
 const queues={};
+function saveNota(id, text){
+  S.notas[id]=Object.assign({},S.notas[id]||{},{cliente_id:S.cid,safeguard:id,notas:text,actualizado_por_email:S.user.email,actualizado_en:new Date().toISOString()});
+  renderAll(); setSync("on","Guardando…");
+  const k="n"+id;
+  const q=(queues[k]||Promise.resolve()).then(async()=>{
+    const { error } = await sb.from("notas_internas").upsert({cliente_id:S.cid,safeguard:id,notas:text,actualizado_por_email:S.user.email,actualizado_en:new Date().toISOString()});
+    if(error){ setSync("err","Sin guardar"); banner("No se guardó la nota de "+id+": "+error.message); } else setSync("on","Guardado");
+  });
+  queues[k]=q; return q;
+}
 function saveEval(id, patch){
-  if(!S.cid) return Promise.resolve();
+  if(!S.cid || isCli()) return Promise.resolve();
+  if(patch.notas!==undefined && S.notasOk){ const pn=saveNota(id, patch.notas); patch=Object.assign({},patch); delete patch.notas; if(patch.estado===undefined) return pn; }
   const base = Object.assign({estado:null,notas:""}, S.ev[id]||{});
   const row = { cliente_id:S.cid, safeguard:id, estado:(patch.estado!==undefined?patch.estado:base.estado)||null,
-    notas:(patch.notas!==undefined?patch.notas:base.notas)||"", actualizado_por_email:S.user.email,
-    actualizado_en:new Date().toISOString() };
+    actualizado_por_email:S.user.email, actualizado_en:new Date().toISOString() };
+  if(!S.notasOk) row.notas=(patch.notas!==undefined?patch.notas:base.notas)||"";
   S.ev[id]=Object.assign({},base,row); renderAll();
   setSync("on","Guardando…");
   const q=(queues[id]||Promise.resolve()).then(async()=>{
@@ -928,7 +993,7 @@ function fileList(key, upEl){
     const a=document.createElement("a"); a.href="#"; a.textContent=f.nombre; a.onclick=e=>{ e.preventDefault(); openFile(f); };
     const sm=document.createElement("small"); sm.textContent=kb(f.bytes||0)+" · "+fmtDate(f.subido_en)+(f.subido_por_email?" · "+f.subido_por_email:"");
     mid.append(a,sm);
-    const del=document.createElement("button"); del.textContent="Quitar"; del.onclick=()=>removeEvidence(f, upEl);
+    const del=document.createElement("button"); del.textContent="Quitar"; del.className="soc-only"; del.onclick=()=>removeEvidence(f, upEl);
     li.append(th,mid,del); ul.appendChild(li);
   });
   return ul;
@@ -970,11 +1035,11 @@ function renderReqs(){
       const tl=document.createElement("div"); tl.className="rq-t"; tl.textContent=q.t; const ar=document.createElement("small"); ar.textContent=rqArea(q)+(enc(rqArea(q))?" · "+enc(rqArea(q)):""); tl.appendChild(ar);
       tl.onclick=()=>{ S.rqOpen[q.k]=!S.rqOpen[q.k]; renderReqs(); };
       const resp=document.createElement("input"); resp.className="rq-resp"; resp.placeholder="Responsable del cliente"; resp.value=r.responsable_cliente||""; resp.setAttribute("aria-label","Responsable del cliente");
-      resp.onchange=()=>saveReq(q.k,{responsable_cliente:resp.value.trim()});
+      resp.onchange=()=>saveReq(q.k,{responsable_cliente:resp.value.trim()}); resp.disabled=isCli(); if(isCli()&&!resp.value) resp.placeholder="—";
       const dt=document.createElement("input"); dt.type="date"; dt.className="rq-date"+(isLate(q.k)?" late":""); dt.value=r.fecha_compromiso||""; dt.title="Fecha compromiso"; dt.setAttribute("aria-label","Fecha compromiso");
-      dt.onchange=()=>saveReq(q.k,{fecha_compromiso:dt.value||null});
+      dt.onchange=()=>saveReq(q.k,{fecha_compromiso:dt.value||null}); dt.disabled=isCli();
       const se=document.createElement("select"); se.setAttribute("aria-label","Estado"); RQ_EST.forEach(x=>{ const o=document.createElement("option"); o.value=x; o.textContent=x; se.appendChild(o); }); se.value=e;
-      se.onchange=()=>saveReq(q.k,{estado:se.value});
+      se.onchange=()=>saveReq(q.k,{estado:se.value}); se.disabled=isCli();
       const ev=document.createElement("span"); ev.className="rq-ev"; const nf=(S.files[reqKey(q.k)]||[]).length; ev.textContent=nf?"📎 "+nf:"";
       const x=document.createElement("button"); x.className="rq-x"; x.textContent="›"; x.setAttribute("aria-label","Ver detalle"); x.onclick=()=>{ S.rqOpen[q.k]=!S.rqOpen[q.k]; renderReqs(); };
       row.append(led,kk,tl,resp,dt,se,ev,x); box.appendChild(row);
@@ -983,7 +1048,7 @@ function renderReqs(){
       const left=document.createElement("div");
       if(q.d){ const p=document.createElement("p"); p.style.margin="0 0 10px"; p.style.color="var(--ink2)"; p.style.fontSize="13.5px"; p.textContent=q.d; left.appendChild(p); }
       const sgs=document.createElement("div"); sgs.className="rq-sgs"; q.sg.forEach(id=>sgs.appendChild(sgChip(id))); if(!q.sg.length){ const s0=document.createElement("small"); s0.style.color="var(--muted)"; s0.textContent="Sin safeguards ligados"; sgs.appendChild(s0); } left.appendChild(sgs);
-      const ta=document.createElement("textarea"); ta.placeholder="Notas: qué se pidió, a quién, cómo se entregó, observaciones…"; ta.value=r.notas||""; ta.onchange=()=>saveReq(q.k,{notas:ta.value}); left.appendChild(ta);
+      const ta=document.createElement("textarea"); ta.placeholder="Notas: qué se pidió, a quién, cómo se entregó, observaciones…"; ta.value=r.notas||""; ta.onchange=()=>saveReq(q.k,{notas:ta.value}); ta.readOnly=isCli(); if(isCli() && !ta.value) ta.style.display="none"; left.appendChild(ta);
       const meta=document.createElement("div"); meta.className="rq-meta"; meta.textContent=(r.fecha_solicitud?"Solicitada "+r.fecha_solicitud+" · ":"")+(r.actualizado_en?"Actualizado "+fmtDate(r.actualizado_en)+(r.actualizado_por_email?" por "+r.actualizado_por_email:""):"Sin cambios todavía"); left.appendChild(meta);
       if(q.custom){ const d=document.createElement("button"); d.className="rq-del"; d.textContent="Eliminar solicitud"; d.onclick=()=>delCustomReq(q.k); left.appendChild(d); }
       const right=document.createElement("div");
@@ -992,10 +1057,11 @@ function renderReqs(){
       const inp=document.createElement("input"); inp.type="file"; inp.multiple=true; inp.className="hidden"; inp.id="rqf-"+q.k;
       const lab=document.createElement("label"); lab.htmlFor=inp.id; lab.textContent="elígelos";
       drop.append(document.createTextNode("Arrastra la evidencia aquí o "),lab,inp);
-      inp.onchange=()=>{ addFiles([...inp.files], reqKey(q.k), up).then(()=>{ if(rqEst(q.k)==="Pendiente"||rqEst(q.k)==="Solicitado") saveReq(q.k,{estado:"Recibido"}); }); inp.value=""; };
+      const afterUp=()=>{ if(rqEst(q.k)==="Pendiente"||rqEst(q.k)==="Solicitado"){ if(isCli()){ S.req[q.k]=Object.assign({},S.req[q.k]||{},{clave:q.k,estado:"Recibido"}); renderAll(); } else saveReq(q.k,{estado:"Recibido"}); } };
+      inp.onchange=()=>{ addFiles([...inp.files], reqKey(q.k), up).then(afterUp); inp.value=""; };
       ["dragenter","dragover"].forEach(tp=>drop.addEventListener(tp,ev2=>{ ev2.preventDefault(); drop.classList.add("over"); }));
       ["dragleave","drop"].forEach(tp=>drop.addEventListener(tp,ev2=>{ ev2.preventDefault(); drop.classList.remove("over"); }));
-      drop.addEventListener("drop",ev2=>{ addFiles([...(ev2.dataTransfer.files||[])], reqKey(q.k), up).then(()=>{ if(rqEst(q.k)==="Pendiente"||rqEst(q.k)==="Solicitado") saveReq(q.k,{estado:"Recibido"}); }); });
+      drop.addEventListener("drop",ev2=>{ addFiles([...(ev2.dataTransfer.files||[])], reqKey(q.k), up).then(afterUp); });
       right.append(drop,up,fileList(reqKey(q.k), up));
       body.append(left,right); box.appendChild(body);
       g.appendChild(box);
@@ -1113,7 +1179,7 @@ function renderFindings(){
     hd.append(id,t,pl,ig);
     const who=document.createElement("p"); const sa=areaOf(s.id); who.textContent=sa+(enc(sa)?" · "+enc(sa):"");
     const rec=document.createElement("p"); rec.textContent="Recomendación: "+s.rc; b.append(hd,who,rec);
-    const notas=(S.ev[s.id]||{}).notas; if(notas){ const n=document.createElement("p"); n.textContent="Notas: "+notas; b.appendChild(n); }
+    const notas=isCli()?"":notaOf(s.id); if(notas){ const n=document.createElement("p"); n.textContent="Notas: "+notas; b.appendChild(n); }
     b.onclick=()=>openDrawer(s.id); host.appendChild(b);
   });
 }
@@ -1159,15 +1225,15 @@ function renderDrawer(){
     if(v===null){
       const sel=document.createElement("select"); sel.className="asel"; sel.setAttribute("aria-label","Área responsable");
       areasList().forEach(a=>{ const o=document.createElement("option"); o.value=a; o.textContent=a; sel.appendChild(o); }); sel.value=sa;
-      sel.onchange=()=>setAsig(s.id, sel.value);
+      sel.onchange=()=>setAsig(s.id, sel.value); sel.disabled=isCli();
       const en=document.createElement("small"); en.className="aenc"; en.textContent=enc(sa)||"Sin encargado";
       dd.append(sel,en);
     } else dd.textContent=v;
     w.append(dt,dd); dl.appendChild(w); });
   $("d-crit").textContent=s.cr; $("d-rec").textContent=s.rc; renderDrawerReqs(s.id);
-  document.querySelectorAll("#d-seg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.s===ev.estado)));
+  document.querySelectorAll("#d-seg button").forEach(b=>{ b.setAttribute("aria-pressed",String(b.dataset.s===ev.estado)); b.disabled=isCli(); });
   $("d-clear").classList.toggle("hidden",!ev.estado);
-  const ta=$("d-notes"); if(document.activeElement!==ta || ta.dataset.id!==s.id){ ta.value=ev.notas||""; ta.dataset.id=s.id; }
+  const ta=$("d-notes"); if(document.activeElement!==ta || ta.dataset.id!==s.id){ ta.value=notaOf(s.id); ta.dataset.id=s.id; }
   const ul=$("files"); ul.textContent="";
   filesOf(s.id).forEach(f=>{
     const li=document.createElement("li"); li.className="file";
@@ -1188,14 +1254,15 @@ function renderDrawer(){
 function flushNotes(){
   if(notesTimer){ clearTimeout(notesTimer); notesTimer=null; }
   const ta=$("d-notes"), id=ta.dataset.id; if(!id || !S.cid) return;
-  const curN=(S.ev[id]||{}).notas||""; if(ta.value!==curN) saveEval(id,{notas:ta.value}).then(()=>{ if(ta.dataset.id===id) $("d-saved").textContent="Notas guardadas"; });
+  if(isCli()) return;
+  const curN=notaOf(id); if(ta.value!==curN) saveEval(id,{notas:ta.value}).then(()=>{ if(ta.dataset.id===id) $("d-saved").textContent="Notas guardadas"; });
 }
 
 /* ---------- Exportar ---------- */
 function exportCsv(){
   const esc=v=>{ v=String(v==null?"":v); return /[",\n;]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
   const lines=[["ID","Control","Safeguard","IG","Área responsable","Encargado","Estado","Notas","Evidencias","Actualizado","Por"].join(",")];
-  SG.forEach(s=>{ const e=S.ev[s.id]||{}; lines.push([s.id,s.c+". "+s.cn,s.t,s.ig,areaOf(s.id),enc(areaOf(s.id)),e.estado||"Pendiente",e.notas||"",filesOf(s.id).map(f=>f.nombre).join(" | "),e.actualizado_en?fmtDate(e.actualizado_en):"",e.actualizado_por_email||""].map(esc).join(",")); });
+  SG.forEach(s=>{ const e=S.ev[s.id]||{}; lines.push([s.id,s.c+". "+s.cn,s.t,s.ig,areaOf(s.id),enc(areaOf(s.id)),e.estado||"Pendiente",notaOf(s.id),filesOf(s.id).map(f=>f.nombre).join(" | "),e.actualizado_en?fmtDate(e.actualizado_en):"",e.actualizado_por_email||""].map(esc).join(",")); });
   const blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv"}); const u=URL.createObjectURL(blob);
   const a=document.createElement("a"); a.href=u; a.download="hardening-"+((cur()||{}).nombre||"cliente").replace(/[^\w-]+/g,"-")+".csv"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000);
 }
@@ -1207,6 +1274,33 @@ function showTab(t){
 }
 
 /* ---------- Logo del cliente ---------- */
+/* ---------- Usuarios y roles (solo SOC) ---------- */
+async function loadUsers(){
+  if(isCli()) return;
+  const { data, error } = await sb.from("perfiles").select("*").order("email");
+  $("us-missing").classList.toggle("hidden", !error);
+  S.perfiles = error ? [] : (data||[]); renderUsers();
+}
+function renderUsers(){
+  const tbl=$("t-users"); tbl.textContent="";
+  const th=tbl.createTHead().insertRow(); ["Usuario","Rol","Empresa (solo para Cliente)",""].forEach(h=>{ const c=document.createElement("th"); c.textContent=h; th.appendChild(c); });
+  const tb=tbl.createTBody();
+  if(!S.perfiles.length){ const tr=tb.insertRow(); const td=tr.insertCell(); td.colSpan=4; td.textContent="Sin usuarios que mostrar."; return; }
+  S.perfiles.forEach(p=>{
+    const tr=tb.insertRow(); const me=S.user && p.user_id===S.user.id;
+    tr.insertCell().textContent=p.email||p.user_id;
+    const r=document.createElement("select"); [["soc","SOC"],["cliente","Cliente"],["pendiente","Sin acceso"]].forEach(([v,l])=>{ const o=document.createElement("option"); o.value=v; o.textContent=l; r.appendChild(o); });
+    r.value=p.rol; r.disabled=me; tr.insertCell().appendChild(r);
+    const c=document.createElement("select"); const o0=document.createElement("option"); o0.value=""; o0.textContent="—"; c.appendChild(o0);
+    S.clientes.forEach(cl=>{ const o=document.createElement("option"); o.value=cl.id; o.textContent=cl.nombre; c.appendChild(o); });
+    c.value=p.cliente_id||""; c.disabled=me || p.rol!=="cliente"; tr.insertCell().appendChild(c);
+    const st=tr.insertCell(); const tg=document.createElement("span"); tg.className="tagrol "+p.rol; tg.textContent=me?"Tú":(p.rol==="cliente"&&!p.cliente_id?"Falta empresa":({soc:"SOC",cliente:"Cliente",pendiente:"Sin acceso"})[p.rol]); st.appendChild(tg);
+    const save=async(patch)=>{ const { error } = await sb.from("perfiles").update(patch).eq("user_id",p.user_id); if(error){ banner("No se pudo actualizar el acceso: "+error.message); } else { Object.assign(p,patch); setSync("on","Guardado"); } renderUsers(); };
+    r.onchange=()=>{ const patch={rol:r.value}; if(r.value!=="cliente") patch.cliente_id=null; else if(!p.cliente_id && S.cid) patch.cliente_id=S.cid; save(patch); };
+    c.onchange=()=>save({cliente_id:c.value||null});
+  });
+}
+
 const LOGO_TYPES={png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg",svg:"image/svg+xml",webp:"image/webp"};
 let logoShown=null;
 function renderLogo(){
@@ -1315,7 +1409,7 @@ function initUI(){
   $("cli").addEventListener("change",e=>loadCliente(e.target.value));
   ["fl-area","fl-ig","fl-est","fl-ctl"].forEach(x=>$(x).addEventListener("change",()=>{ renderHero(); renderList(); }));
   $("fl-q").addEventListener("input",()=>{ renderHero(); renderList(); });
-  document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>{ showTab(b.dataset.tab); if(b.dataset.tab==="usuarios") loadUsers(); });
   $("d-close").onclick=closeDrawer; $("scrim").onclick=closeDrawer;
   document.addEventListener("keydown",e=>{ if(e.key==="Escape" && S.sel) closeDrawer(); });
   document.querySelectorAll("#d-seg button").forEach(b=>b.onclick=()=>{ if(S.sel){ flushNotes(); saveEval(S.sel,{estado:b.dataset.s}); } });
